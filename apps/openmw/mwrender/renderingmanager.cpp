@@ -841,7 +841,7 @@ namespace MWRender
         float fov = mFieldOfView;
         if (mFieldOfViewOverridden)
             fov = mFieldOfViewOverride;
-        mViewer->getCamera()->setProjectionMatrixAsPerspective(fov, aspect, mNearClip, mViewDistance);
+        mViewer->getCamera()->setProjectionMatrixAsPerspective(fov, aspect, 600, mViewDistance);
     }
 
     void RenderingManager::updateTextureFiltering()

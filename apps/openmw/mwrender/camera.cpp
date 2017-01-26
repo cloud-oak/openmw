@@ -96,8 +96,6 @@ namespace MWRender
         osg::Matrix worldMat = osg::computeLocalToWorld(nodepaths[0]);
 
         osg::Vec3d position = worldMat.getTrans();
-        if (!isFirstPerson())
-            position.z() += mHeight * mHeightScale;
         return position;
     }
 
@@ -108,15 +106,14 @@ namespace MWRender
 
         osg::Vec3d position = getFocalPoint();
 
-        osg::Quat orient =  osg::Quat(getPitch(), osg::Vec3d(1,0,0)) * osg::Quat(getYaw(), osg::Vec3d(0,0,1));
+        // osg::Quat orient =  osg::Quat(getPitch(), osg::Vec3d(1,0,0)) * osg::Quat(getYaw(), osg::Vec3d(0,0,1));
 
-        osg::Vec3d offset = orient * osg::Vec3d(0, isFirstPerson() ? 0 : -mCameraDistance, 0);
+        osg::Vec3d offset = osg::Vec3d(mCameraDistance, mCameraDistance, 800);
         position += offset;
 
-        osg::Vec3d forward = orient * osg::Vec3d(0,1,0);
-        osg::Vec3d up = orient * osg::Vec3d(0,0,1);
+        osg::Vec3d up = osg::Vec3d(0,0,1);
 
-        cam->setViewMatrixAsLookAt(position, position + forward, up);
+        cam->setViewMatrixAsLookAt(position, getFocalPoint(), up);
     }
 
     void Camera::reset()
